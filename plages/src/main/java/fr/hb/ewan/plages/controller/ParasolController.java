@@ -26,7 +26,7 @@ public class ParasolController {
 	
 	// La méthode sera invoquée lorsqu'une requête sur l'URL parasol est reçue 
 	@GetMapping("parasol")
-	public ModelAndView getParasol(@ModelAttribute Parasol parasol) {
+	public ModelAndView getParasol(@ModelAttribute(name="parasol") Parasol parasol) {
 		ModelAndView mav = new ModelAndView();
 		// On définit la view (ici c'est des jsp) 
 		mav.setViewName("parasol");
@@ -39,7 +39,7 @@ public class ParasolController {
 	}
 	
 	@PostMapping("parasol")
-	public ModelAndView postParasol(@Valid @ModelAttribute Parasol parasol,BindingResult result) {
+	public ModelAndView postParasol(@Valid @ModelAttribute(name="parasol") Parasol parasol,BindingResult result) {
 		if(result.hasErrors()) {
 			return getParasol(parasol);
 		}
