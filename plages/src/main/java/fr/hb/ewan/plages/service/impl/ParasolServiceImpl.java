@@ -1,7 +1,7 @@
 package fr.hb.ewan.plages.service.impl;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import fr.hb.ewan.plages.business.Parasol;
@@ -22,8 +22,8 @@ public class ParasolServiceImpl implements ParasolService {
 	}
 
 	@Override
-	public List<Parasol> recupererParasols() {
-		return parasolDao.findAll();
+	public Page<Parasol> recupererParasols(Pageable pageable) {
+		return parasolDao.findAll(pageable);
 	}
 
 	@Override
