@@ -31,4 +31,9 @@ public class ParasolServiceImpl implements ParasolService {
 		return parasolDao.findById(id).orElse(null);
 	}
 
+	@Override
+	public Page<Parasol> recupererParasols(Pageable pageable, Long idFile) {
+		return parasolDao.findByFileId(pageable,idFile);
+	}
+
 }
