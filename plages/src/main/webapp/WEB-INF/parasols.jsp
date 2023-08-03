@@ -40,5 +40,6 @@ ${pageDeParasols.numberOfElements + (pageDeParasols.size * pageDeParasols.number
 sur ${pageDeParasols.getTotalElements()} parasols</h2>
 <br><br>
 <a href="parasol">Ajouter un parasol</a>
+<jsp:include page="include/piedDePage.jsp"></jsp:include>
 </body>
 </html>
