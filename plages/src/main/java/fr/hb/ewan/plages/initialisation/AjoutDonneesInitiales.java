@@ -52,5 +52,13 @@ public class AjoutDonneesInitiales implements CommandLineRunner {
 			}
 		}
 	}
+	
+	/*
+	private void ajouterPays() {
+        if (paysDao.count() == 0) {
+            paysDao.saveAll(Arrays.asList(new Pays("FR", "France"), new Pays("IT", "Italie"), new Pays("GB", "Royaume-Uni"), new Pays("PT", "Portugal")));
+        }
+    }
+    */
 
 }

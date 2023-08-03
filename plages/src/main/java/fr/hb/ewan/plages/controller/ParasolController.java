@@ -52,7 +52,7 @@ public class ParasolController {
 	}
 	
 	@GetMapping("parasols")
-	public ModelAndView getParasols(@PageableDefault(size=8, sort="file.numero") Pageable pageable) {
+	public ModelAndView getParasols(@PageableDefault(size=10, sort={"file.numero", "numEmplacement"}) Pageable pageable) {
 		ModelAndView mav = new ModelAndView();
 		// On définit la view (ici c'est des jsp) 
 		mav.setViewName("parasols");

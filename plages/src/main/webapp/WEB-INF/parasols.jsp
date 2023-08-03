@@ -24,7 +24,7 @@
     <li>${parasol.numEmplacement} en file ${parasol.file.numero} (${parasol.file.prixJournalier} &euro;) <a href="parasol?ID_PARASOL=${parasol.id}">Modifier</a></li>
 </c:forEach>
 </ul>
-Page ${pageDeParasols.getNumber()+1}
+<a href="parasols?page=${pageDeParasols.getNumber()+1}">Page suivante </a>
 <br><br>
 <a href="parasol">Ajouter un parasol</a>
 </body>
