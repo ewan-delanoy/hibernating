@@ -25,13 +25,13 @@
 </c:forEach>
 </ul>
 <c:if test="${!pageDeParasols.isFirst()}">
-<a href="parasols?page=0&sort=${sort}">&#x23EE;</a>
-<a href="parasols?page=${pageDeParasols.number-1}&sort=${sort}">&#x23EA;</a>
+<a href="parasols?page=0&sort=${sort}&ID_FILE=${idFile}">&#x23EE;</a>
+<a href="parasols?page=${pageDeParasols.number-1}&sort=${sort}&ID_FILE=${idFile}">&#x23EA;</a>
 </c:if>
 Page ${pageDeParasols.getNumber()+1}
 <c:if test="${!pageDeParasols.last}">
-<a href="parasols?page=${pageDeParasols.number+1}&sort=${pageDeParasols.sort.iterator().next().property},${pageDeParasols.sort.iterator().next().direction}">&#x23E9;</a>
-<a href="parasols?page=${pageDeParasols.totalPages - 1}&sort=${sort}">&#x23ED;</a>
+<a href="parasols?page=${pageDeParasols.number+1}&sort=${sort}&ID_FILE=${idFile}">&#x23E9;</a>
+<a href="parasols?page=${pageDeParasols.totalPages - 1}&sort=${sort}&ID_FILE=${idFile}">&#x23ED;</a>
 </c:if>
 <h2>Parasols de 
 ${pageDeParasols.totalElements == 0 ? 0 : pageDeParasols.size * pageDeParasols.number+1} 

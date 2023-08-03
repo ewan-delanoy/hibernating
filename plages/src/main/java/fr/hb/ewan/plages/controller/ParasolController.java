@@ -1,9 +1,12 @@
 package fr.hb.ewan.plages.controller;
 
+import java.util.Iterator;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -72,6 +75,16 @@ public class ParasolController {
 			mav.addObject("pageDeParasols", parasolService.recupererParasols(pageable,idFile));
 		}
 		mav.addObject("files", fileService.recupererFiles());
+		mav.addObject("idFile", idFile);
+		Iterator<Order> iterator = pageable.getSort().iterator();
+        StringBuilder sort = new StringBuilder();
+        while (iterator.hasNext()) {
+            sort.append(iterator.next().getProperty());
+            if (iterator.hasNext()) {
+                sort.append(",");
+            }
+        }
+        mav.addObject("sort", sort.toString());
 		return mav;
 
 	}

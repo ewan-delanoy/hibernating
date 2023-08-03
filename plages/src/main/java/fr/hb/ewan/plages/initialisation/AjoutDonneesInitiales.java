@@ -30,6 +30,7 @@ public class AjoutDonneesInitiales implements CommandLineRunner {
 		ajouterFiles();
 		ajouterParasols();
         ajouterPays();
+        ajouterLiensDeParente();
 	}
 
 	public void ajouterFiles() {
@@ -61,9 +62,19 @@ public class AjoutDonneesInitiales implements CommandLineRunner {
 	
 	private void ajouterPays() {
         if (paysDao.count() == 0) {
-            paysDao.saveAll(Arrays.asList(new Pays("FR", "France"), new Pays("IT", "Italie"), new Pays("GB", "Royaume-Uni"), new Pays("PT", "Portugal")));
+        	paysDao.save(new Pays("FR", "France"));
+        	paysDao.save(new Pays("IT", "Italie"));
+        	paysDao.save(new Pays("GB", "Royaume-Uni"));
+        	paysDao.save(new Pays("PT", "Portugal"));
         }
     }
    
+	private void ajouterLiensDeParente() {
+        if (lienDeParenteDao.count()==0) {
+            lienDeParenteDao.save(new LienDeParente("Frère/Soeur", 0.5f));
+            lienDeParenteDao.save(new LienDeParente("Cousin/Cousine", 0.75f));
+            lienDeParenteDao.save(new LienDeParente("Aucun", 1f));
+        }
+    }
 
 }

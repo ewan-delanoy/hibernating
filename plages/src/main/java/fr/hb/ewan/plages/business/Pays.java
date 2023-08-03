@@ -1,7 +1,10 @@
 package fr.hb.ewan.plages.business;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,4 +21,8 @@ public class Pays {
 	private String code;
 	
 	private String nom;
+	
+	//Relation
+    @OneToMany(mappedBy="pays")
+    private List<Client> clients;
 }
