@@ -39,7 +39,7 @@ public class ClientController {
     
 //  @PostMapping("parasol")
     @RequestMapping(value = "/client", method = RequestMethod.POST)
-    public ModelAndView postParasol(@Valid @ModelAttribute Client client, BindingResult result) {
+    public ModelAndView postClient(@Valid @ModelAttribute Client client, BindingResult result) {
         if (result.hasErrors()) {
             System.err.println("[ERROR] Client non ajouté:");
             for (ObjectError error : result.getAllErrors()) {
