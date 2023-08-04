@@ -6,9 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<jsp:include page="include/header.jsp"></jsp:include>
 </head>
 <body>
+<jsp:include page="include/nav.jsp"></jsp:include>
 <h1>Parasol</h1> <%-- <h1><spring:message code="parasol"/></h1> --%>
 <form:form method="post" modelAttribute="parasol" action="parasol">
 <form:label path="numEmplacement">Numéro d'emplacement</form:label><form:input path="numEmplacement"/>

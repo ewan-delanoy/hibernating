@@ -5,9 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<jsp:include page="include/header.jsp"></jsp:include>
 </head>
 <body>
+<jsp:include page="include/nav.jsp"></jsp:include>
 <h1>Liste des parasols</h1>
 <form>
 <select name="ID_FILE">

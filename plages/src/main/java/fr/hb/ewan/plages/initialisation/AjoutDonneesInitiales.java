@@ -1,14 +1,14 @@
 package fr.hb.ewan.plages.initialisation;
 
-import java.util.Arrays;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import fr.hb.ewan.plages.business.File;
+import fr.hb.ewan.plages.business.LienDeParente;
 import fr.hb.ewan.plages.business.Parasol;
 import fr.hb.ewan.plages.business.Pays;
 import fr.hb.ewan.plages.dao.FileDao;
+import fr.hb.ewan.plages.dao.LienDeParenteDao;
 import fr.hb.ewan.plages.dao.ParasolDao;
 import fr.hb.ewan.plages.dao.PaysDao;
 import lombok.AllArgsConstructor;
@@ -23,6 +23,7 @@ public class AjoutDonneesInitiales implements CommandLineRunner {
 	private FileDao fileDao;
 	private ParasolDao parasolDao;
 	private PaysDao paysDao;
+	private LienDeParenteDao lienDeParenteDao;
 
 	@Override
 	public void run(String... args) throws Exception {

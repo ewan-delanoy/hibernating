@@ -6,9 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<jsp:include page="include/header.jsp"></jsp:include>
 </head>
 <body>
+<jsp:include page="include/nav.jsp"></jsp:include>
 <h1>Ajout d'un client</h1>
 <form:form method="post" modelAttribute="client" action="client">
 <form:label path="nom" class="col-sm-1 control-label">Nom</form:label><form:input path="nom"/><form:errors cssClass="erreur" path="nom"/><br>
@@ -22,7 +23,7 @@
 <br>
 <form:label path="lienDeParente" class="col-sm-1 control-label">Lien de parenté</form:label><form:select path="lienDeParente">
 <form:option value="0">Merci de choisir un lien de parenté</form:option>
-<form:options items="${liensDeParente}" itemValue="id" itemLabel="nom"/>
+<form:options items="${liensDeParente}" itemValue="id" itemLabel="typeDeParente"/>
 </form:select><form:errors cssClass="erreur" path="lienDeParente"/>
 <div class="col-sm-1 control-label"></div><form:button class="btn btn-success">Enregistrer</form:button>
 </form:form>

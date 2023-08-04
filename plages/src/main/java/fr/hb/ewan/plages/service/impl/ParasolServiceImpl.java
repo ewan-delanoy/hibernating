@@ -17,7 +17,7 @@ public class ParasolServiceImpl implements ParasolService {
 	private final ParasolDao parasolDao;
 
 	@Override
-	public Parasol ajouterParasol(Parasol parasol) {
+	public Parasol enregistrerParasol(Parasol parasol) {
 		return parasolDao.save(parasol);
 	}
 

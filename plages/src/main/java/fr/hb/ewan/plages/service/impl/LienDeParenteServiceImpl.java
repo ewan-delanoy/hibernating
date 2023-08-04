@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import fr.hb.ewan.plages.business.LienDeParente;
+import fr.hb.ewan.plages.dao.LienDeParenteDao;
 import fr.hb.ewan.plages.service.LienDeParenteService;
 import lombok.AllArgsConstructor;
 
@@ -35,5 +36,6 @@ public class LienDeParenteServiceImpl implements LienDeParenteService {
     public Page<LienDeParente> recupererLiensDeParente(Pageable pageable) {
         return lienDeParenteDao.findAll(pageable);
     }
+
 
 }

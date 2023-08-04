@@ -15,7 +15,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Client extends Utilisateur{
 
@@ -27,4 +26,9 @@ public class Client extends Utilisateur{
     
     @ManyToOne
     private LienDeParente lienDeParente;
+    
+    public Client() {
+        super();
+        this.dateHeureInscription = LocalDateTime.now();
+    }
 }

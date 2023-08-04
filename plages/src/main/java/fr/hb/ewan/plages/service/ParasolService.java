@@ -7,7 +7,7 @@ import fr.hb.ewan.plages.business.File;
 import fr.hb.ewan.plages.business.Parasol;
 
 public interface ParasolService {
-	Parasol ajouterParasol(Parasol file);
+	Parasol enregistrerParasol(Parasol file);
 	Page<Parasol> recupererParasols(Pageable pageable);
 	Parasol recupererParasol(Long id);
 	Page<Parasol> recupererParasols(Pageable pageable,Long idFile);

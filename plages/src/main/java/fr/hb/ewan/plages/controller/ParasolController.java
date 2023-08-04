@@ -32,7 +32,9 @@ public class ParasolController {
 
 	// La méthode sera invoquée lorsqu'une requête sur l'URL parasol est reçue
 	@GetMapping("parasol")
-	public ModelAndView getParasol(@ModelAttribute(name = "parasol") Parasol parasol) {
+	public ModelAndView getParasol(@ModelAttribute(name = "parasol") Parasol parasol,
+			@RequestParam(name = "ID_PARASOL", required = false) Long idParasol
+			) {
 		ModelAndView mav = new ModelAndView();
 		// On définit la view (ici c'est des jsp)
 		mav.setViewName("parasol");
@@ -41,6 +43,12 @@ public class ParasolController {
 		// mav.addObject("parasol", new Parasol());
 		// on ajoute dans le compartiment à petite bille la liste des files
 		mav.addObject("files", fileService.recupererFiles());
+		
+		if (idParasol != null) {
+			mav.addObject("parasol", parasolService.recupererParasol(idParasol));
+		} 
+		mav.addObject("files", fileService.recupererFiles());
+		
 		return mav;
 
 	}
@@ -48,10 +56,10 @@ public class ParasolController {
 	@PostMapping("parasol")
 	public ModelAndView postParasol(@Valid @ModelAttribute(name = "parasol") Parasol parasol, BindingResult result) {
 		if (result.hasErrors()) {
-			return getParasol(parasol);
+			return getParasol(parasol,parasol.getId());
 		}
-		parasolService.ajouterParasol(parasol);
-		return new ModelAndView("redirect:/parasol");
+		parasolService.enregistrerParasol(parasol);
+		return new ModelAndView("redirect:/parasols");
 	}
 
 	/**

@@ -1,5 +1,16 @@
 package fr.hb.ewan.plages.service.impl;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import fr.hb.ewan.plages.business.Client;
+import fr.hb.ewan.plages.dao.ClientDao;
+import fr.hb.ewan.plages.service.ClientService;
+import lombok.AllArgsConstructor;
+
 @Service
 @AllArgsConstructor
 public class ClientServiceImpl implements ClientService {
