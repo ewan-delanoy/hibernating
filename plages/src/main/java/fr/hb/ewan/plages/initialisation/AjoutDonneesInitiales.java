@@ -1,12 +1,17 @@
 package fr.hb.ewan.plages.initialisation;
 
+import java.text.Normalizer;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.boot.CommandLineRunner;
@@ -17,11 +22,13 @@ import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
 
 import fr.hb.ewan.plages.business.Client;
+import fr.hb.ewan.plages.business.Concessionnaire;
 import fr.hb.ewan.plages.business.File;
 import fr.hb.ewan.plages.business.LienDeParente;
 import fr.hb.ewan.plages.business.Parasol;
 import fr.hb.ewan.plages.business.Pays;
 import fr.hb.ewan.plages.dao.ClientDao;
+import fr.hb.ewan.plages.dao.ConcessionnaireDao;
 import fr.hb.ewan.plages.dao.FileDao;
 import fr.hb.ewan.plages.dao.LienDeParenteDao;
 import fr.hb.ewan.plages.dao.ParasolDao;
@@ -40,6 +47,7 @@ public class AjoutDonneesInitiales implements CommandLineRunner {
 	private PaysDao paysDao;
 	private LienDeParenteDao lienDeParenteDao;
 	private ClientDao clientDao;
+	private ConcessionnaireDao concessionnaireDao;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -48,7 +56,8 @@ public class AjoutDonneesInitiales implements CommandLineRunner {
 		ajouterParasols();
 		ajouterPays();
 		ajouterLiensDeParente();
-		ajouterClients();
+		ajouterClients(30);
+		ajouterConcessionnaire();
 	}
 
 	public void ajouterFiles() {
@@ -96,8 +105,10 @@ public class AjoutDonneesInitiales implements CommandLineRunner {
 
 	public void ajouterClients() {
 		if (clientDao.count() == 0) {
+
 			Faker faker = new Faker(new Locale("fr-FR"));
-			FakeValuesService fakeValuesService = new FakeValuesService(new Locale("fr-FR"), new RandomService());
+			FakeValuesService fakeValuesService = new FakeValuesService(new Locale("fr-FR"),
+					new RandomService());
 			Random random = new Random();
 
 			// Partie traitement
@@ -123,6 +134,83 @@ public class AjoutDonneesInitiales implements CommandLineRunner {
 				clientDao.save(client);
 			}
 
+		}
+	}
+
+	private void ajouterClientsVersionEwan(int nbClientsAAjouter) {
+		if (clientDao.count() == 0) {
+			Faker faker = new Faker(new Locale("fr-FR"));
+			List<Pays> pays = paysDao.findAll();
+			LienDeParente lienDeParenteAucun = lienDeParenteDao.findByTypeDeParente("Aucun");
+			Map<String, Client> map = new HashMap<>();
+			Calendar calendar = Calendar.getInstance();
+			Random random = new Random();
+			List<String> terminaisons = Arrays.asList ("hb.com","gmail.com","yahoo.it","hotmail.fr");
+			while (map.size() != nbClientsAAjouter) {
+				String prenom = faker.name().firstName();
+				String nom = faker.name().lastName();
+				String prenomNormalise = Normalizer.normalize(prenom.toLowerCase(), Normalizer.Form.NFD).replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+				String nomNormalise = Normalizer.normalize(nom.toLowerCase(), Normalizer.Form.NFD).replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+				String terminaisonAleatoire = terminaisons.get(random.nextInt(terminaisons.size()));
+				String email = prenomNormalise + "." + nomNormalise + "@" + terminaisonAleatoire;
+				Client client = Client.builder().nom(nom).prenom(prenom)
+						.pays(pays.get(random.nextInt(pays.size()))).email(email)
+						.lienDeParente(lienDeParenteAucun)
+						.motDePasse(String.valueOf(random.nextInt(99999999) + 10000000)).build();
+				calendar.set(2020, 1, 1);
+				Date dateDebut = calendar.getTime();
+				calendar = Calendar.getInstance();
+				Date dateFin = calendar.getTime();
+				Date dateAleatoire = faker.date().between(dateDebut, dateFin);
+				calendar.setTime(dateAleatoire);
+				LocalDateTime dateHeureInscription = dateAleatoire.toInstant().atZone(ZoneId.systemDefault())
+						.toLocalDateTime();
+				client.setDateHeureInscription(dateHeureInscription);
+				map.put(client.getEmail(), client);
+			}
+			clientDao.saveAll(map.values());
+		}
+	}
+
+	 private void ajouterClients(int nbClientsAAjouter) {
+         if (clientDao.count() == 0) {
+                 List<Pays> pays = paysDao.findAll();
+                 LienDeParente lienDeParenteAucun = lienDeParenteDao.findByTypeDeParente("Aucun");
+                 Map<String, Client> map = new HashMap<>();
+                 Random random = new Random();
+                 Faker faker = new Faker(Locale.FRENCH);
+
+                 while (map.size() != nbClientsAAjouter) {
+                        Client client = Client.builder()
+                         .nom(faker.name().lastName())
+                         .prenom(faker.name().firstName())
+                         .pays(pays.get(random.nextInt(pays.size())))
+                         .email(faker.internet().emailAddress().replaceAll(" ", ""))
+                         .lienDeParente(lienDeParenteAucun)
+                         .motDePasse(String.valueOf(random.nextInt(99999999) + 10000000))
+                         .build();
+                         client.setDateHeureInscription(LocalDateTime.ofInstant(
+                                 faker.date().between(
+                                     Date.from(LocalDate.of(2020, 1, 1).atStartOfDay(ZoneId.systemDefault()).toInstant()), 
+                                     Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant())
+                                     ).toInstant(), 
+                                 ZoneId.systemDefault()));
+                         map.put(client.getEmail(), client);
+                 }
+                 clientDao.saveAll(map.values());
+          }
+ }
+	
+	private void ajouterConcessionnaire() {
+		if (concessionnaireDao.count() == 0) {
+			Faker faker = new Faker(new Locale("fr-FR"));
+			Concessionnaire concessionnaire = new Concessionnaire();
+			concessionnaire.setNom("ROSSI");
+			concessionnaire.setPrenom("Giuseppe");
+			concessionnaire.setEmail("peppe@humanbooster.fr");
+			concessionnaire.setMotDePasse("12345678");
+			concessionnaire.setNumeroDeTelephone(faker.phoneNumber().cellPhone());
+			concessionnaireDao.save(concessionnaire);
 		}
 	}
 

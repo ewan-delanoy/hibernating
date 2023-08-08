@@ -25,6 +25,7 @@
 <form:option value="0">Merci de choisir un lien de parenté</form:option>
 <form:options items="${liensDeParente}" itemValue="id" itemLabel="typeDeParente"/>
 </form:select><form:errors cssClass="erreur" path="lienDeParente"/>
+<form:hidden path="id"/>
 <div class="col-sm-1 control-label"></div><form:button class="btn btn-success">Enregistrer</form:button>
 </form:form>
 <jsp:include page="include/piedDePage.jsp"></jsp:include>

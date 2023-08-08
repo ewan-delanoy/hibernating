@@ -61,7 +61,7 @@ public class ClientController {
             try {
                 clientService.ajouterClient(client);
                 System.out.println("Client ajouté!");
-                ModelAndView mav = new ModelAndView("redirect:/client");
+                ModelAndView mav = new ModelAndView("redirect:/clients");
                 return mav;
             } catch (Exception e) {
                 System.err.println(e);
