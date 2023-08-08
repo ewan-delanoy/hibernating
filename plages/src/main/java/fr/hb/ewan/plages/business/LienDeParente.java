@@ -29,6 +29,7 @@ public class LienDeParente {
     private float coefficient;
     
     //Relation
+    @ToString.Exclude
     @OneToMany(mappedBy="lienDeParente")
     private List<Client> clients;
     

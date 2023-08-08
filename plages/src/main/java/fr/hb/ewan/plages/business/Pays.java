@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -26,6 +27,7 @@ public class Pays {
 	private String nom;
 	
 	//Relation
+	@ToString.Exclude
     @OneToMany(mappedBy="pays")
     private List<Client> clients;
 }
